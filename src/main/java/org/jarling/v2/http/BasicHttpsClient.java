@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BasicHttpsClient {
+
+    private Map<String, String> defaultHeaders;
+
     private HttpResponse request(HttpRequest httpRequest) throws StarlingBankRequestException {
         try {
             HttpsURLConnection httpsURLConnection = (HttpsURLConnection) httpRequest.getFullUrl().openConnection();
@@ -29,9 +32,17 @@ public class BasicHttpsClient {
         return null;
     }
 
+    public void setDefaultHeaders(Map<String, String> defaultHeaders) {
+        this.defaultHeaders = defaultHeaders;
+    }
+
     private Map<String, String> getHeaders(HttpRequest request) {
         Map<String, String> headers = new HashMap<>();
-        headers.put("User-Agent", "Jarling/0.1 (Starling Bank Java Client Library)");
+
+        if (defaultHeaders != null) {
+            headers.putAll(defaultHeaders);
+        }
+
         headers.put("Accept", "application/json");
         if (request.getBody() != null) {
             headers.put("Content-Type", "application/json; charset=utf-8");

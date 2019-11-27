@@ -9,6 +9,7 @@ import org.jarling.v2.http.CertificateType;
 import org.jarling.v2.http.SignedHttpsClient;
 
 import java.security.PrivateKey;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -17,14 +18,28 @@ public final class ApiService {
     private final BearerHttpsClient authenticatedRequest;
     private SignedHttpsClient signedRequest;
     private final String starlingBankEndpoint;
+    private final Map<String, String> defaultHeaders;
 
     public ApiService(StarlingBankEnvironment starlingBankEnvironment, String accessToken) {
+        this(starlingBankEnvironment, accessToken, null);
+    }
+
+    public ApiService(StarlingBankEnvironment starlingBankEnvironment, String accessToken, Map<String, String> defaultHeaders) {
+        this.defaultHeaders = new HashMap<>();
+        if (defaultHeaders == null) {
+            this.defaultHeaders.put("User-Agent", "Jarling/0.1 (Starling Bank Java Client Library)");
+        } else {
+            this.defaultHeaders.putAll(defaultHeaders);
+        }
+
         this.starlingBankEndpoint = starlingBankEnvironment.getPath() + API_BASE_PATH;
         this.authenticatedRequest = new BearerHttpsClient(accessToken);
+        this.authenticatedRequest.setDefaultHeaders(this.defaultHeaders);
     }
 
     public void configureRequestSigning(PrivateKey privateKey, UUID publicKeyUid, CertificateType certificateType) {
         this.signedRequest = new SignedHttpsClient(authenticatedRequest.getAccessToken(), privateKey, publicKeyUid, certificateType);
+        this.signedRequest.setDefaultHeaders(this.defaultHeaders);
     }
 
     public boolean canSignRequests() {

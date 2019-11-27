@@ -41,10 +41,14 @@ public final class Starling extends StarlingBase implements StarlingBank {
     private static ApiService apiService;
 
     public Starling(StarlingBankEnvironment environment, String accessToken) {
+        this(environment, accessToken, null);
+    }
+
+    public Starling(StarlingBankEnvironment environment, String accessToken, Map<String, String> defaultHeaders) {
         if (accessToken == null || accessToken.equals("")) {
             throw new IllegalArgumentException("access token cannot be null or blank");
         } else {
-            apiService = new ApiService(environment, accessToken);
+            apiService = new ApiService(environment, accessToken, defaultHeaders);
         }
     }
 
