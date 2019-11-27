@@ -4,7 +4,6 @@ import org.jarling.exceptions.StarlingBankRequestException;
 import org.jarling.models.transactions.FeedItemAttachmentData;
 import org.jarling.v2.models.transactionfeed.FeedItem;
 import org.jarling.v2.models.transactionfeed.FeedItemAttachment;
-import org.jarling.v2.models.transactionfeed.SpendingCategory;
 
 import java.time.Instant;
 import java.util.List;
@@ -44,7 +43,7 @@ public interface TransactionFeedResource {
     /**
      * Changes the spending category for a transaction
      */
-    void updateSpendingCategory(UUID accountUid, UUID categoryUid, UUID feedItemUid, SpendingCategory spendingCategory) throws StarlingBankRequestException;
+    void updateSpendingCategory(UUID accountUid, UUID categoryUid, UUID feedItemUid, String spendingCategory) throws StarlingBankRequestException;
 
 }
 
