@@ -6,7 +6,6 @@ import org.jarling.v2.BaseTest;
 import org.jarling.v2.models.accounts.Account;
 import org.jarling.v2.models.transactionfeed.FeedItem;
 import org.jarling.v2.models.transactionfeed.FeedItemAttachment;
-import org.jarling.v2.models.transactionfeed.SpendingCategory;
 import org.junit.Test;
 
 import java.time.Instant;
@@ -27,10 +26,10 @@ public class TransactionFeedTest extends BaseTest {
             UUID categoryUid = account.getDefaultCategory();
             FeedItem feedItem = starling.getFeedItems(accountUid, categoryUid, getDefaultDate()).get(0);
 
-            SpendingCategory spendingCategory = feedItem.getSpendingCategory();
-            SpendingCategory newSpendingCategory = spendingCategory == SpendingCategory.BILLS_AND_SERVICES
-                ? SpendingCategory.CHARITY
-                : SpendingCategory.BILLS_AND_SERVICES;
+            String spendingCategory = feedItem.getSpendingCategory();
+            String newSpendingCategory = spendingCategory.equals("BILLS_AND_SERVICES")
+                ? "CHARITY"
+                : "BILLS_AND_SERVICES";
 
             starling.updateSpendingCategory(accountUid, categoryUid, feedItem.getFeedItemUid(), newSpendingCategory);
 

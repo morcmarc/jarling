@@ -26,7 +26,6 @@ import org.jarling.v2.models.payees.PayeeCreationRequest;
 import org.jarling.v2.models.payments.*;
 import org.jarling.v2.models.transactionfeed.FeedItem;
 import org.jarling.v2.models.transactionfeed.FeedItemAttachment;
-import org.jarling.v2.models.transactionfeed.SpendingCategory;
 
 import java.math.BigInteger;
 import java.security.PrivateKey;
@@ -195,7 +194,7 @@ public final class Starling extends StarlingBase implements StarlingBank {
     }
 
     @Override
-    public void updateSpendingCategory(UUID accountUid, UUID categoryUid, UUID feedItemUid, SpendingCategory spendingCategory) throws StarlingBankRequestException {
+    public void updateSpendingCategory(UUID accountUid, UUID categoryUid, UUID feedItemUid, String spendingCategory) throws StarlingBankRequestException {
         apiService.put(
             "/feed/account/" + accountUid.toString()
                 + "/category/" + categoryUid.toString()

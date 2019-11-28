@@ -33,7 +33,7 @@ public class FeedItem {
     private String counterPartySubEntitySubIdentifier;
     private String reference;
     private CountryCode country;
-    private SpendingCategory spendingCategory;
+    private String spendingCategory;
     private String userNote;
     private Status status;
 }
