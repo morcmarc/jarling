@@ -81,6 +81,11 @@ public final class Starling extends StarlingBase implements StarlingBank {
     }
 
     @Override
+    public byte[] getAccountHolderProfileImageAsBytes(UUID accountHolderUid) throws StarlingBankRequestException {
+        return apiService.get("/account-holder/" + accountHolderUid + "/profile-image").asBytes();
+    }
+
+    @Override
     public AddressesResource addresses() {
         return this;
     }
