@@ -18,7 +18,7 @@ public interface AccountHolderResource {
     String getAccountHolderName() throws StarlingBankRequestException;
 
     /**
-     * Get profile image of the account holder encoded as a Base64 string
+     * Get profile image of the account holder encoded as a byte array
      */
     byte[] getAccountHolderProfileImageAsBytes(UUID accountHolderUid) throws StarlingBankRequestException;
 }
