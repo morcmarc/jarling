@@ -37,7 +37,7 @@ import java.util.*;
  * API class responsible for creating services to access Starling Bank resources
  */
 public final class Starling extends StarlingBase implements StarlingBank {
-    private static ApiService apiService;
+    private ApiService apiService;
 
     public Starling(StarlingBankEnvironment environment, String accessToken) {
         this(environment, accessToken, null);
@@ -133,6 +133,16 @@ public final class Starling extends StarlingBase implements StarlingBank {
     @Override
     public Address getCorrespondenceAddress() throws StarlingBankRequestException {
         return gson.fromJson(apiService.get("/account-holder/business/correspondence-address").asString(), Address.class);
+    }
+
+    @Override
+    public CustomResource custom() {
+        return this;
+    }
+
+    @Override
+    public <T> List<T> getCustomList(final Class<T[]> clazz, String urlPath, Map<String, String> parameters, String memberName) throws StarlingBankRequestException {
+        return fromJsonList(clazz, apiService.get(urlPath, parameters).asString(), memberName);
     }
 
     @Override
