@@ -17,4 +17,14 @@ public interface CustomResource {
      * @return List of each parsed entity from the response
      */
     public <T> List<T> getCustomList(final Class<T[]> clazz, String urlPath, Map<String, String> parameters, String memberName) throws StarlingBankRequestException;
+
+    /**
+     * Retrieves a custom object from JSON response for a specified path under the base path. This is to allow easier
+     * reuse when the return types needs to be modified to reflect recent changes.
+     *
+     * @param clazz Class type of response entity
+     * @param urlPath Path under base path to make the HTTP GET request to
+     * @return List of each parsed entity from the response
+     */
+    public <T> T getCustomObject(final Class<T> clazz, String urlPath, Map<String, String> parameters) throws StarlingBankRequestException;
 }

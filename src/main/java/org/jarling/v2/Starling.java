@@ -146,6 +146,11 @@ public final class Starling extends StarlingBase implements StarlingBank {
     }
 
     @Override
+    public <T> T getCustomObject(final Class<T> clazz, String urlPath, Map<String, String> parameters) throws StarlingBankRequestException {
+        return gson.fromJson(apiService.get(urlPath, parameters).asString(), clazz);
+    }
+
+    @Override
     public IndividualsResource individuals() {
         return this;
     }
