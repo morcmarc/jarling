@@ -44,6 +44,11 @@ public class HttpResponse {
 
     private void processStatusCode(HttpsURLConnection httpsURLConnection) throws StarlingBankRequestException {
         try {
+            System.out.println(httpsURLConnection.getResponseCode());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
             switch (httpsURLConnection.getResponseCode()) {
                 case 400:
                     throw new StarlingBankRequestException(httpsURLConnection.getResponseCode(), this.asString(), "Bad Request", "Something was wrong with the request made, check the request to address the error included in the response");
