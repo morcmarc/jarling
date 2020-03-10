@@ -45,6 +45,7 @@ public class HttpResponse {
     private void processStatusCode(HttpsURLConnection httpsURLConnection) throws StarlingBankRequestException {
         try {
             System.out.println(httpsURLConnection.getResponseCode());
+            System.out.println(httpsURLConnection.getResponseMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }
