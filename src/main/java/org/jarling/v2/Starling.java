@@ -1,5 +1,6 @@
 package org.jarling.v2;
 
+import org.apache.tika.Tika;
 import org.jarling.StarlingBankEnvironment;
 import org.jarling.StarlingBase;
 import org.jarling.exceptions.StarlingBankRequestException;
@@ -283,6 +284,42 @@ public final class Starling extends StarlingBase implements StarlingBank {
                     + "/attachments"
             ).asString(),
             "feedItemAttachments"
+        );
+    }
+
+    @Override
+    public void uploadFeedItemAttachment(UUID accountUid, UUID categoryUid, UUID feedItemUid, byte[] file) throws StarlingBankRequestException {
+        String mimeType = new Tika().detect(file);
+        if (mimeType == null) {
+            throw new RuntimeException();
+        }
+
+        Map<String, String> requestHeaders = new HashMap<>();
+        requestHeaders.put("Content-Type", mimeType);
+
+        apiService.post(
+                String.format(
+                        "/feed/account/%s/category/%s/%s/attachments",
+                        accountUid,
+                        categoryUid,
+                        feedItemUid
+                ),
+                file,
+                null,
+                requestHeaders
+        );
+    }
+
+    @Override
+    public void deleteFeedItemAttachment(UUID accountUid, UUID categoryUid, UUID feedItemUid, UUID feedItemAttachmentUid) throws StarlingBankRequestException {
+        apiService.delete(
+                String.format(
+                        "/feed/account/%s/category/%s/%s/attachments/%s",
+                        accountUid,
+                        categoryUid,
+                        feedItemUid,
+                        feedItemAttachmentUid
+                )
         );
     }
 
