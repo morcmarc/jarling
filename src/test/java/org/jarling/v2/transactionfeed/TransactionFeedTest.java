@@ -7,7 +7,9 @@ import org.jarling.v2.models.accounts.Account;
 import org.jarling.v2.models.transactionfeed.FeedItem;
 import org.jarling.v2.models.transactionfeed.FeedItemAttachment;
 import org.junit.Test;
-
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -179,6 +181,39 @@ public class TransactionFeedTest extends BaseTest {
             FeedItem updatedFeedItem = starling.getFeedItem(accountUid, categoryUid, feedItem.getFeedItemUid());
 
             assertThat(updatedFeedItem.getUserNote()).isEqualTo(newUserNote);
+        } catch (StarlingBankRequestException se) {
+            failOnStarlingBankException(se);
+        }
+    }
+
+    @Test
+    public void testUploadFeedItemAttachment() {
+        try {
+            byte [] file = Files.readAllBytes(Paths.get("test.jpg"));
+
+            Account account = starling.getAccounts().get(0);
+            UUID accountUid = account.getAccountUid();
+            UUID categoryUid = account.getDefaultCategory();
+            FeedItem feedItem = starling.getFeedItems(accountUid, categoryUid, getDefaultDate()).get(0);
+            starling.uploadFeedItemAttachment(accountUid, categoryUid, feedItem.getFeedItemUid(), file);
+
+        } catch(StarlingBankRequestException se) {
+            failOnStarlingBankException(se);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testDeleteFeedItemAttachment() {
+        try {
+            Account account = starling.getAccounts().get(0);
+            UUID accountUid = account.getAccountUid();
+            UUID categoryUid = account.getDefaultCategory();
+            FeedItem feedItem = starling.getFeedItems(accountUid, categoryUid, getDefaultDate()).get(0);
+            FeedItemAttachment feedItemAttachment = starling.getFeedItemAttachments(accountUid, categoryUid, feedItem.getFeedItemUid()).get(0);
+            starling.deleteFeedItemAttachment(accountUid, categoryUid, feedItem.getFeedItemUid(), feedItemAttachment.getFeedItemAttachmentUid());
+
         } catch (StarlingBankRequestException se) {
             failOnStarlingBankException(se);
         }

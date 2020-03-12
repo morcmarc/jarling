@@ -20,6 +20,7 @@ class HttpRequest {
     Map<String, String> queryParameters;
     Map<String, String> headers;
     String body;
+    byte[] file;
 
     public URL getFullUrl() throws MalformedURLException {
         return new URL(url + "?" + getQueryString());

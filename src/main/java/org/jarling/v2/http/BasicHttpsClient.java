@@ -18,6 +18,10 @@ public class BasicHttpsClient {
             HttpsURLConnection httpsURLConnection = (HttpsURLConnection) httpRequest.getFullUrl().openConnection();
             httpsURLConnection.setRequestMethod(httpRequest.getRequestMethod().getValue());
             setRequestHeaders(httpsURLConnection, getHeaders(httpRequest));
+            if (httpRequest.getFile() != null) {
+                httpsURLConnection.setDoOutput(true);
+                httpsURLConnection.getOutputStream().write(httpRequest.getFile());
+            }
             if (httpRequest.getBody() != null){
                 httpsURLConnection.setDoOutput(true);
                 httpsURLConnection.getOutputStream().write(httpRequest.getBody().getBytes("UTF-8"));
@@ -70,18 +74,22 @@ public class BasicHttpsClient {
 
 
     public HttpResponse get(String url, Map<String, String> queryParameters, Map<String, String> requestHeaders) throws StarlingBankRequestException {
-        return request(new HttpRequest(RequestMethod.GET, url, queryParameters, requestHeaders, null));
+        return request(new HttpRequest(RequestMethod.GET, url, queryParameters, requestHeaders, null, null));
     }
 
     public HttpResponse post(String url, String body, Map<String, String> queryParameters, Map<String, String> requestHeaders) throws StarlingBankRequestException {
-        return request(new HttpRequest(RequestMethod.POST, url, queryParameters, requestHeaders, body));
+        return request(new HttpRequest(RequestMethod.POST, url, queryParameters, requestHeaders, body, null));
+    }
+
+    public HttpResponse post(String url, byte[] file, Map<String, String> queryParameters, Map<String, String> requestHeaders) throws StarlingBankRequestException {
+        return request(new HttpRequest(RequestMethod.POST, url, queryParameters, requestHeaders, null, file));
     }
 
     public HttpResponse put(String url, String body, Map<String, String> queryParameters, Map<String, String> requestHeaders) throws StarlingBankRequestException {
-        return request(new HttpRequest(RequestMethod.PUT, url, queryParameters, requestHeaders, body));
+        return request(new HttpRequest(RequestMethod.PUT, url, queryParameters, requestHeaders, body, null));
     }
 
     public HttpResponse delete(String url, Map<String, String> queryParameters, Map<String, String> requestHeaders) throws StarlingBankRequestException {
-        return request(new HttpRequest(RequestMethod.DELETE, url, queryParameters, requestHeaders, null));
+        return request(new HttpRequest(RequestMethod.DELETE, url, queryParameters, requestHeaders, null, null));
     }
 }

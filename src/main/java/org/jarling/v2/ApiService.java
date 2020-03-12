@@ -102,6 +102,10 @@ public final class ApiService {
         return authenticatedRequest.post(this.starlingBankEndpoint + url, body, queryParameters, requestHeaders);
     }
 
+    public HttpResponse post(String url, byte[] file, Map<String, String> queryParameters, Map<String, String> requestHeaders) throws StarlingBankRequestException {
+        return authenticatedRequest.post(this.starlingBankEndpoint + url, file, queryParameters, requestHeaders);
+    }
+
     public HttpResponse putSigned(String url) throws StarlingBankRequestException {
         return putSigned(url, null);
     }

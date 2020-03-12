@@ -31,6 +31,16 @@ public interface TransactionFeedResource {
     List<FeedItemAttachment> getFeedItemAttachments(UUID accountUid, UUID categoryUid, UUID feedItemUid) throws StarlingBankRequestException;
 
     /**
+     * Upload feed item attachment
+     */
+    void uploadFeedItemAttachment(UUID accountUid, UUID categoryUid, UUID feedItemUid, byte[] file) throws StarlingBankRequestException;
+
+    /**
+     * Delete feed item attachment
+     */
+    void deleteFeedItemAttachment(UUID accountUid, UUID categoryUid, UUID feedItemUid, UUID feedItemAttachmentUid) throws StarlingBankRequestException;
+
+    /**
      * Downloads the  feed item attachment
      */
     FeedItemAttachmentData getFeedItemAttachment(UUID accountUid, UUID categoryUid, UUID feedItemUid, UUID feedItemAttachmentUid) throws StarlingBankRequestException;
