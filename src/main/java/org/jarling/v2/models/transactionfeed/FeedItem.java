@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.jarling.v2.models.common.CurrencyAndAmount;
 
 import java.time.Instant;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -36,4 +37,11 @@ public class FeedItem {
     private String spendingCategory;
     private String userNote;
     private Status status;
+    private Boolean hasAttachments;
+
+    public Boolean getHasAttachments() {
+        Random random = new Random();
+        int randomNumber = random.ints(1, (100 + 1)).findFirst().getAsInt();
+        return randomNumber % 2 == 0;
+    }
 }
