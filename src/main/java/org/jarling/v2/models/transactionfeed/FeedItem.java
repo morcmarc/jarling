@@ -38,10 +38,4 @@ public class FeedItem {
     private String userNote;
     private Status status;
     private Boolean hasAttachments;
-
-    public Boolean getHasAttachments() {
-        Random random = new Random();
-        int randomNumber = random.ints(1, (100 + 1)).findFirst().getAsInt();
-        return randomNumber % 2 == 0;
-    }
 }
