@@ -36,5 +36,5 @@ public class FeedItem {
     private String spendingCategory;
     private String userNote;
     private Status status;
-    private Boolean hasAttachments;
+    private Boolean hasAttachment;
 }
