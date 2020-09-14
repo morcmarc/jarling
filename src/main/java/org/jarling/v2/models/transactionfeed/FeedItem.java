@@ -37,4 +37,5 @@ public class FeedItem {
     private String userNote;
     private Status status;
     private Boolean hasAttachment;
+    private Boolean receiptPresent;
 }
